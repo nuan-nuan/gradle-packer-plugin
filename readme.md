@@ -4,11 +4,13 @@ Android多渠道打包工具Gradle插件
 
 ## 最新版本
 
-- [![Maven Central](http://img.shields.io/badge/2015.02.12-com.mcxiaoke.gradle:packer:1.0.2-brightgreen.svg)](http://search.maven.org/#artifactdetails%7Ccom.mcxiaoke.gradle%7Cpacker%7C1.0.2%7Cjar) 
+[![Maven Central](http://img.shields.io/badge/2015.05.18-com.mcxiaoke.gradle:packer:1.0.4-brightgreen.svg)](http://search.maven.org/#artifactdetails%7Ccom.mcxiaoke.gradle%7Cpacker%7C1.0.4%7Cjar) 
 
-- 2014.12.20 发布1.0.0版，支持渠道打包和版本号自增等功能  
-- 2014.12.24 发布1.0.1版，完善market文件异常处理   
-- 2015.02.12 发布1.0.2版，检查manifestMatcher配置   
+- 2014.12.20 发布1.0.0版，支持渠道打包和版本号自增等功能
+- 2014.12.24 发布1.0.1版，完善market文件异常处理
+- 2015.02.12 发布1.0.2版，检查manifestMatcher配置
+- 2015.03.24 发布1.0.3版，版本号自增与versionName和buildType无关
+- 2015.05.18 发布1.0.4版，移除Android插件版本检查，支持最新版本
 
 ## 项目介绍
 
@@ -84,7 +86,7 @@ apply plugin: 'packer'
 
 ### 版本号自增
 
-版本号自动会自动在在 `vesionName` 尾部增加 `.buildNumer` 该字段会自动增长，举例：如果App本来的版本号是 1.2.3，那么使用版本号自动后会是 `1.2.3.1` `1.2.3.2` ... `1.2.3.25` 末尾的build版本号会随构建次数自动增长。注意：如果在命令行使用 `-PbuildNum=123` 这种形式指定了build版本号，那么自增版本号不会生肖
+版本号自动会自动在在 `vesionName` 尾部增加 `.buildNumer` 该字段会自动增长，举例：如果App本来的版本号是 1.2.3，那么使用版本号自动后会是 `1.2.3.1` `1.2.3.2` ... `1.2.3.25` 末尾的build版本号会随构建次数自动增长。注意：如果在命令行使用 `-PbuildNum=123` 这种形式指定了build版本号，那么自增版本号不会生效
 
 	
 ## 配置选项 
@@ -263,11 +265,31 @@ dependencies {
 
 本项目参考了公司内部Android项目使用的多渠道打包工具，最初作者是 [googolmo](https://github.com/googolmo)，文件名模板自定义部分的代码修改自此项目 [android-appversion-gradle-plugin](https://github.com/hamsterksu/android-appversion-gradle-plugin)
 
+------
 
-## 项目许可
+## 关于作者
 
+#### 联系方式
+* Blog: <http://blog.mcxiaoke.com>
+* Github: <https://github.com/mcxiaoke>
+* Email: [mail@mcxiaoke.com](mailto:mail@mcxiaoke.com)
 
-    Copyright 2014 Xiaoke Zhang
+#### 开源项目
+
+* Next公共组件库: <https://github.com/mcxiaoke/Android-Next>
+* Gradle渠道打包: <https://github.com/mcxiaoke/gradle-packer-plugin>
+* EventBus实现xBus: <https://github.com/mcxiaoke/xBus>
+* Rx文档中文翻译: <https://github.com/mcxiaoke/RxDocs>
+* MQTT协议中文版: <https://github.com/mcxiaoke/mqtt>
+* 蘑菇饭App: <https://github.com/mcxiaoke/minicat>
+* 饭否客户端: <https://github.com/mcxiaoke/fanfouapp-opensource>
+* Volley镜像: <https://github.com/mcxiaoke/android-volley>
+
+------
+
+## License
+
+    Copyright 2014 - 2015 Xiaoke Zhang
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -281,4 +303,3 @@ dependencies {
     See the License for the specific language governing permissions and
     limitations under the License.
 
-I

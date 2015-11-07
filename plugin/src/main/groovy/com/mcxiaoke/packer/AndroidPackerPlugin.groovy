@@ -17,8 +17,6 @@ class AndroidPackerPlugin implements Plugin<Project> {
 
     static final String PROP_FILE = "packer.properties"
 
-    static final String[] SUPPORTED_ANDROID_VERSIONS = ['0.14.', '1.0.']
-
     Project project
     Properties props
     AndroidPackerExtension packerExt
@@ -31,21 +29,11 @@ class AndroidPackerPlugin implements Plugin<Project> {
 
         this.project = project
         this.props = loadProperties(project, PROP_FILE)
-        checkAndroidPlugin()
         applyExtension()
         // checkBuildType()
         // add markets must before evaluate
         def hasMarkets = applyMarkets()
         applyPluginTasks(hasMarkets)
-    }
-
-    private void checkAndroidPlugin() {
-        def plugin = project.buildscript.configurations.classpath.dependencies.find {
-            it.group && it.group == 'com.android.tools.build' && it.name == 'gradle'
-        }
-        if (plugin && !isVersionSupported(plugin.version)) {
-            throw new IllegalStateException("the android plugin ${plugin.version} is not supported.")
-        }
     }
 
     void applyExtension() {
@@ -215,7 +203,7 @@ class AndroidPackerPlugin implements Plugin<Project> {
             def typeName = variant.buildType.name
             if (auto && (patterns == null || patterns.contains(typeName))) {
                 // or apply auto increment build number
-                def newBuildNo = increaseBuildNumber(variant)
+                def newBuildNo = checkBuildNumber()
                 variant.mergedFlavor.versionName += "." + newBuildNo.toString();
             }
         }
@@ -223,13 +211,10 @@ class AndroidPackerPlugin implements Plugin<Project> {
         debug("checkVersionName() versionName:${variant.mergedFlavor.versionName}")
     }
 
-    int increaseBuildNumber(variant) {
-        def typeName = variant.buildType.name
-        def versionName = variant.mergedFlavor.versionName
-        def key = "${versionName}.${typeName}.build"
-        def buildNo = props.getProperty(key, "0").toInteger() + 1
+    int checkBuildNumber() {
+        def buildNo = props.getProperty("version", "0").toInteger() + 1
         //put new build number to props
-        props[key] = buildNo.toString()
+        props["version"] = buildNo.toString()
         //store property file
         saveProperties(project, props, PROP_FILE)
         return buildNo
@@ -413,16 +398,6 @@ class AndroidPackerPlugin implements Plugin<Project> {
 
     static boolean getGitSha() {
         return 'git rev-parse --short HEAD'.execute().text.trim()
-    }
-
-    static boolean isVersionSupported(String version) {
-        for (supportedVersion in SUPPORTED_ANDROID_VERSIONS) {
-            if (version.startsWith(supportedVersion)) {
-                return true
-            }
-        }
-
-        return false
     }
 
 
